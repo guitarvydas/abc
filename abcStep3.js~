@@ -1,0 +1,32 @@
+'user strict'
+
+var semantics = require('./abcSemantics.js');
+var transpiler = ('./transpiler.js');
+var ohm = require('ohm-js');
+
+var source = require('./test.abc');
+
+var grammar = `
+ABCgrok {
+TopLevel = Assignment+
+
+  Assignment =   Variable "=" Expression -- complex
+               | Variable "=" number -- simple
+  Expression = Variable "+" Variable
+
+    Variable = "a" .. "z"
+    number = digit+
+}
+`;
+
+
+function main () {
+    let parser = ohm.grammar (grammar);
+    let cst = parser.match (source);
+    if (cst.succeeded ()) {
+	let semantics = parser.createSemantics ();
+	semantics.addOperation ('interpret', semantics);
+    } else {
+	throw ("grammar error :");
+    }
+}

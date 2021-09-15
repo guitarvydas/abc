@@ -1,0 +1,19 @@
+'user strict'
+
+var grammar = require('./abc.ohm');
+var semantics = require('./abc-semantics-rough-in.js');
+var transpiler = ('./transpiler.js');
+var ohm = require('ohm-js');
+
+var source = require('./test.abc');
+
+function main () {
+    let parser = ohm.grammar (grammar);
+    let cst = parser.match (source);
+    if (cst.succeeded ()) {
+	let semantics = parser.createSemantics ();
+	semantics.addOperation ('roughIn', semantics);
+    } else {
+	throw ("grammar error :");
+    }
+}

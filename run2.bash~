@@ -1,0 +1,3 @@
+#!/bin/bash
+# node abcStep2.js
+node abcStep3.js
