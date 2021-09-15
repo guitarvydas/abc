@@ -27,7 +27,10 @@ function main () {
     if (cst.succeeded ()) {
 	let cstSemantics = parser.createSemantics ();
 	cstSemantics.addOperation ('interpret', semanticsCode.interpret);
-	return cstSemantics (cst).interpret ();
+	var interpretedResult = cstSemantics (cst).interpret ();
+	return {
+	    interpreted: interpretedResult
+	};
     } else {
 	console.log (parser.trace (source).toString ());
 	throw ("grammar error");

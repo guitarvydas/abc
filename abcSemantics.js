@@ -34,3 +34,37 @@ exports.interpret = {
 	return parseInt (this.sourceString);
     }    
 };
+
+exports.transpile = {
+
+    TopLevel: function (as) {
+	var finalString = as.interpret ();
+	return finalString;
+    },
+    
+    Assignment_simple: function (v, keq, n) {
+	var name = v.interpret ();
+	var value = n.interpret ();
+	return `var ${name} = ${value};`; 
+    },
+
+    Assignment_complex: function (v, keq, expr) {
+	var name = v.interpret ();
+	var value = expr.interpret ();
+	return `var ${name} = ${value};`; 
+    },
+
+    Expression: function (v1, kplus, v2) {
+	let name1 = v1.interpret ();
+	let name2 = v2.interpret ();
+	return `${name1} + ${name2}`;
+    },
+
+    Variable: function (c) {
+	return this.sourceString;
+    },
+
+    number: function (ds) {
+	return this.sourceString;
+    }    
+};
