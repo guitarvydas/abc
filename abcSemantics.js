@@ -2,8 +2,8 @@ var symbolTable = require ('./symbolTable.js');
 
 exports.interpret = {
 
-    TopLevel: function (as) {
-	var dontcare = as.interpret ();
+    TopLevel: function (assignments) {
+	var dontcare = assignments.interpret ();
 	return symbolTable.symbolTable;
     },
     
@@ -37,26 +37,26 @@ exports.interpret = {
 
 exports.transpile = {
 
-    TopLevel: function (as) {
-	var finalString = as.interpret ();
+    TopLevel: function (assignments) {
+	var finalString = assignments.transpile ().join ('\n');
 	return finalString;
     },
     
     Assignment_simple: function (v, keq, n) {
-	var name = v.interpret ();
-	var value = n.interpret ();
+	var name = v.transpile ();
+	var value = n.transpile ();
 	return `var ${name} = ${value};`; 
     },
 
     Assignment_complex: function (v, keq, expr) {
-	var name = v.interpret ();
-	var value = expr.interpret ();
+	var name = v.transpile ();
+	var value = expr.transpile ();
 	return `var ${name} = ${value};`; 
     },
 
     Expression: function (v1, kplus, v2) {
-	let name1 = v1.interpret ();
-	let name2 = v2.interpret ();
+	let name1 = v1.transpile ();
+	let name2 = v2.transpile ();
 	return `${name1} + ${name2}`;
     },
 
