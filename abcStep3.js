@@ -1,4 +1,4 @@
-'user strict'
+'use strict'
 
 var ohm = require('ohm-js');
 var fs = require('fs');
