@@ -2,6 +2,11 @@ var symbolTable = require ('./symbolTable.js');
 
 exports.interpret = {
 
+    TopLevel: function (as) {
+	var dontcare = as.interpret ();
+	return symbolTable.symbolTable;
+    },
+    
     Assignment_simple: function (v, keq, n) {
 	var name = v.interpret ();
 	var value = n.interpret ();
@@ -29,4 +34,3 @@ exports.interpret = {
 	return parseInt (this.sourceString);
     }    
 };
-

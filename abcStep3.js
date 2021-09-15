@@ -27,15 +27,12 @@ function main () {
     if (cst.succeeded ()) {
 	let cstSemantics = parser.createSemantics ();
 	cstSemantics.addOperation ('interpret', semanticsCode.interpret);
-	cstSemantics (cst).interpret ();
-	console.log (`a = ${symbolTable.symbolTable["a"]}`);
-	console.log (`b = ${symbolTable.symbolTable["b"]}`);
-	console.log (`c = ${symbolTable.symbolTable["c"]}`);
+	return cstSemantics (cst).interpret ();
     } else {
 	console.log (parser.trace (source).toString ());
 	throw ("grammar error");
     }
 }
 
-main ();
-
+var result = main ();
+console.log (result);
