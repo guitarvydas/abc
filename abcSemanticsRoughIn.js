@@ -1,4 +1,7 @@
 exports.roughInSemantics = {
+    TopLevel: function (assignments) {
+    },
+    
     Assignment_simple: function (v, keq, n) {
     },
 

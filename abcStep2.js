@@ -4,7 +4,6 @@ var ohm = require('ohm-js');
 var fs = require('fs');
 
 var semanticsCode = require('./abcSemanticsRoughIn.js');
-var transpiler = ('./transpiler.js');
 var source = fs.readFileSync ('test.abc', 'utf-8');
 
 var grammar = `
