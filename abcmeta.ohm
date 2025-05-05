@@ -1,0 +1,16 @@
+abcmeta {
+TopLevel = Expression
+
+Expression =
+  | LetExpression -- let
+  | PlusExpression -- plus
+  | atom -- atom
+
+LetExpression = "(" "let" "(" Binding ")" Expression? ")"
+Binding = "(" variable Expression ")"
+PlusExpression = "(" "+" Expression Expression ")"
+atom = variable | number
+variable = "a" .. "z"
+number = dig+
+dig = "0" .. "9"
+}
