@@ -1,8 +1,0 @@
-ABCgrok {
-Assignment =
-	     Variable '=' number -- simple
-	   | Variable '=' Expression -- complex
-Expression = Variable '+' Variable
-
-Variable = [a-z]
-}
