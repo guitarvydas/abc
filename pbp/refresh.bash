@@ -1,28 +1,35 @@
 #!/bin/bash
 set -e
+wd=.
+pbp=./pbp
+Dev=~/projects/pbp-dev
+TaS_Dev=${Dev}/tas
+
+
 if [ -n "${DEV_PBP}" ]; then
 
-    PTK=./pbp/ptk
-    KERNEL=./pbp/kernel
-    DAS=./pbp/das
-    TAS=./pbp/tas
-    T2T=./pbp/t2t
 
-    rm -rf pbp
-    mkdir -p ${PTK} ${KERNEL} ${DAS} ${TAS} ${T2T}
+    KERNEL=./kernel
+    DAS=./das
+    TAS=./tas
+    T2T=./t2t
 
-    cp ~/projects/pbp/tas.bash .
-    chmod a+x tas.bash
+    rm -rf tas
+    rm -rf das
+    rm -rf t2t
+    rm -rf kernel
+    mkdir tas
+    mkdir das
+    mkdir t2t
+    mkdir kernel
     
-    cp ~/projects/pbp-dev/kernel/kernel0d.py ${KERNEL}/kernel0d.py
-    cp ~/projects/pbp-dev/kernel/stubbed-out-repl.py ${KERNEL}/repl.py
-    cp ~/projects/pbp-dev/kernel/decodeoutput.mjs ${KERNEL}
-    cp ~/projects/pbp-dev/das/das2json.mjs ${DAS}/das2json.mjs
-    cp ~/projects/pbp-dev/t2t/nanodsl ./${T2T}
-    chmod a+x ${T2T}/nanodsl
-    cp -R ~/projects/pbp-dev/t2t/lib ${T2T}
 
-    TaS_Dev=~/projects/pbp-dev/tas
+    cp ${Dev}/kernel/kernel0d.py ${KERNEL}/kernel0d.py
+    cp ${Dev}/kernel/stubbed-out-repl.py ${KERNEL}/repl.py
+    cp ${Dev}/kernel/decodeoutput.mjs ${KERNEL}
+    cp ${Dev}/das/das2json.mjs ${DAS}/das2json.mjs
+    cp -R ${Dev}/t2t/lib ${T2T}
+
     # for TaS, use code that is known to work for TaS (ostensibly the same as ${KERNEL}/???, but not necessarily)
     cp ${TaS_Dev}/cldecode.{ohm,rewrite} ${TAS}
     cp ${TaS_Dev}/cleanup.py ${TAS}
@@ -47,10 +54,6 @@ if [ -n "${DEV_PBP}" ]; then
     cp ${TaS_Dev}/pyrelocate.py ${TAS}
     cp ${TaS_Dev}/repl.py ${TAS}
     cp ${TaS_Dev}/tas.drawio.json ${TAS}
-    cp ${TaS_Dev}/ndsl ./${TAS}
-    chmod a+x ${TaS_Dev}/ndsl
-    cp -R ${TaS_Dev}/t2t ${TAS}
-    chmod a+x ${TAS}/t2t/nanodsl
     cp ${TaS_Dev}/semantics.{ohm,rewrite} ${TAS}
     cp ${TaS_Dev}/support.js ${TAS}
     cp ${TaS_Dev}/syntax.{ohm,rewrite} ${TAS}
