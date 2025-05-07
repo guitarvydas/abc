@@ -1,14 +1,11 @@
-% rewrite abcmetajs {
+% rewrite abcirpy {
 TopLevel [e] = ‛«e»’
 
-Expression_let [L] = ‛«L»’
-Expression_let [p] = ‛«p»’
-Expression_let [a] = ‛«a»’
+Expression_let [lp1 _let lp2 lp3 v e1 rp3 rp2 e? rp1] = ‛\n«v» = «e1»«e»’
+Expression_plus [lp _plus e1 e2 rp] = ‛«e1» «_plus» «e2»’ 
+Expression_vatom [v] = ‛«v»’
+Expression_natom [n] = ‛«n»’
 
-LetExpression [lp1 _let lp2 binding rp2 e? rb1] = ‛«binding»«e»’
-Binding [lp v e rp] = ‛\n«v» = «e»’
-PlusExpression [lp _plus e1 e2 rp] = ‛«e1» «_plus» «e2»’
-atom [x] = ‛«x»’
 variable [id] = ‛«id»’
 number [digits+] = ‛«digits»’
 dig [c] = ‛«c»’
