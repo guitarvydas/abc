@@ -1,8 +1,10 @@
 % rewrite ABCcl {
 TopLevel [exprs] = ‛«exprs»’
 
-Expression_assignment [variable _eq e rec?] = ‛\n(let ((«variable» «e»)) «rec»)’
-Expression_plus [left _plus right rec?] = ‛(+ «left» «right») «rec»’
+Statement_assignment [variable _eq e rec?] = ‛\n(let ((«variable» «e»)) «rec»)’
+Statement_expr [e rec?] = ‛«e»«rec»’
+
+Expression_plus [left _plus right] = ‛(+ «left» «right»)’
 Expression_atom [a] = ‛«a»’
 
 atom [a] = ‛«a»’

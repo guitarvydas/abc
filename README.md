@@ -4,7 +4,7 @@
 - transpilation happens in several stages
   1. parse
   2. rewrite
-  3. [run the resulting transpiled code using the host language (Python, Javascript, Lisp ; skip this step in this simple example)]
+  3. [run the resulting transpiled code using the host language (Python, Javascript, Lisp ; skip this step in this simple example - see abc2py for an example of running code)]
 
 # Usage
 `$ ./make.bash`

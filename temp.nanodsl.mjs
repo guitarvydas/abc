@@ -35,19 +35,24 @@ function exit_rule (name) {
 }
 
 const grammar = String.raw`
-abcir {
-TopLevel = Expression
+ABC {
+TopLevel = Statement+
 
-Expression =
-  | "(" "let" "(" "(" variable Expression ")" ")" Expression? ")" -- let
-  | "(" "+" Expression Expression ")" -- plus
-  | variable -- vatom
-  | number -- natom
+  Statement =
+    | variable "<-" Expression Statement? -- assignment
+    | Expression Statement? -- expr
 
-variable = "a" .. "z"
-number = dig+
-dig = "0" .. "9"
-}`;
+  Expression =
+    | Expression "+" Expression -- plus
+    | atom -- atom
+
+  atom = variable | number
+  
+    variable = "a" .. "z"
+    number = dig+
+    dig = "0" .. "9"
+}
+`;
 
 let args = {};
 function resetArgs () {
@@ -78,34 +83,39 @@ function getParameter (name) {
 
 let _rewrite = {
 
-TopLevel : function (e,) {
+TopLevel : function (exprs,) {
 enter_rule ("TopLevel");
-    set_return (`${e.rwr ()}`);
+    set_return (`${exprs.rwr ()}`);
 return exit_rule ("TopLevel");
 },
-Expression_let : function (lp1,_let,lp2,lp3,v,e1,rp3,rp2,e,rp1,) {
-enter_rule ("Expression_let");
-    set_return (`\n${v.rwr ()} = ${e1.rwr ()}${e.rwr ().join ('')}`);
-return exit_rule ("Expression_let");
+Statement_assignment : function (v,_eq,e,rec,) {
+enter_rule ("Statement_assignment");
+    set_return (`\n${v.rwr ()}${_eq.rwr ()}${e.rwr ()}${rec.rwr ().join ('')}`);
+return exit_rule ("Statement_assignment");
 },
-Expression_plus : function (lp,_plus,e1,e2,rp,) {
+Statement_expr : function (e,rec,) {
+enter_rule ("Statement_expr");
+    set_return (`${e.rwr ()}${rec.rwr ().join ('')}`);
+return exit_rule ("Statement_expr");
+},
+Expression_plus : function (left,_plus,right,) {
 enter_rule ("Expression_plus");
-    set_return (`${e1.rwr ()} ${_plus.rwr ()} ${e2.rwr ()}`);
+    set_return (`${left.rwr ()}${_plus.rwr ()}${right.rwr ()}`);
 return exit_rule ("Expression_plus");
 },
-Expression_vatom : function (v,) {
-enter_rule ("Expression_vatom");
-    set_return (`${v.rwr ()}`);
-return exit_rule ("Expression_vatom");
+Expression_atom : function (a,) {
+enter_rule ("Expression_atom");
+    set_return (`${a.rwr ()}`);
+return exit_rule ("Expression_atom");
 },
-Expression_natom : function (n,) {
-enter_rule ("Expression_natom");
-    set_return (`${n.rwr ()}`);
-return exit_rule ("Expression_natom");
+atom : function (a,) {
+enter_rule ("atom");
+    set_return (`${a.rwr ()}`);
+return exit_rule ("atom");
 },
-variable : function (id,) {
+variable : function (c,) {
 enter_rule ("variable");
-    set_return (`${id.rwr ()}`);
+    set_return (`${c.rwr ()}`);
 return exit_rule ("variable");
 },
 number : function (digits,) {

@@ -1,8 +1,10 @@
 % rewrite ABCidentity {
 TopLevel [exprs] = ‛«exprs»’
 
-Expression_assignment [v _eq e rec?] = ‛\n«v»«_eq»«e»«rec»’
-Expression_plus [left _plus right rec?] = ‛«left»«_plus»«right» «rec»’
+Statement_assignment [v _eq e rec?] =  ‛\n«v»«_eq»«e»«rec»’
+Statement_expr [e rec?] = ‛«e»«rec»’
+
+Expression_plus [left _plus right] = ‛«left»«_plus»«right»’
 Expression_atom [a] = ‛«a»’
 
 atom [a] = ‛«a»’

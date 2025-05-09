@@ -1,8 +1,10 @@
 % rewrite ABCjs {
 TopLevel [exprs] = ‛«exprs»’
 
-Expression_assignment [v _eq e rec?] = ‛\nlet «v» = «e»; «rec»’
-Expression_plus [left _plus right rec?] = ‛«left» + «right» «rec»’
+Statement_assignment [v _eq e rec?] = ‛\nlet «v» = «e»;«rec»’
+Statement_expr [e rec?] = ‛«e»«rec»’
+
+Expression_plus [left _plus right] = ‛«left» + «right»’
 Expression_atom [a] = ‛«a»’
 
 atom [a] = ‛«a»’
