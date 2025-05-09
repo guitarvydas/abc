@@ -36,17 +36,17 @@ function exit_rule (name) {
 
 const grammar = String.raw`
 abcir {
-TopLevel = Expression
+TopLevel = Statement+
+
+Statement =
+  | Expression Statement? -- expr
 
 Expression =
-  | LetExpression -- let
-  | PlusExpression -- plus
-  | atom -- atom
+  | "(" "let" "(" "(" variable Expression ")" ")" Expression? ")" -- let
+  | "(" "+" Expression Expression ")" -- plus
+  | variable -- vatom
+  | number -- natom
 
-LetExpression = "(" "let" "(" Binding ")" Expression? ")"
-Binding = "(" variable Expression ")"
-PlusExpression = "(" "+" Expression Expression ")"
-atom = variable | number
 variable = "a" .. "z"
 number = dig+
 dig = "0" .. "9"
@@ -81,45 +81,35 @@ function getParameter (name) {
 
 let _rewrite = {
 
-TopLevel : function (e,) {
+TopLevel : function (s,) {
 enter_rule ("TopLevel");
-    set_return (`${e.rwr ()}`);
+    set_return (`${s.rwr ()}`);
 return exit_rule ("TopLevel");
 },
-Expression_let : function (L,) {
+Statement_expr : function (e,rec,) {
+enter_rule ("Statement_expr");
+    set_return (`${e.rwr ()}${rec.rwr ().join ('')}`);
+return exit_rule ("Statement_expr");
+},
+Expression_let : function (lp1,_let,lp2,lp3,v,e1,rp3,rp2,e,rp1,) {
 enter_rule ("Expression_let");
-    set_return (`${L.rwr ()}`);
+    set_return (`\n${v.rwr ()} = ${e1.rwr ()}${e.rwr ().join ('')}`);
 return exit_rule ("Expression_let");
 },
-Expression_let : function (p,) {
-enter_rule ("Expression_let");
-    set_return (`${p.rwr ()}`);
-return exit_rule ("Expression_let");
-},
-Expression_let : function (a,) {
-enter_rule ("Expression_let");
-    set_return (`${a.rwr ()}`);
-return exit_rule ("Expression_let");
-},
-LetExpression : function (lp1,_let,lp2,binding,rp2,e,rb1,) {
-enter_rule ("LetExpression");
-    set_return (`${binding.rwr ()}${e.rwr ().join ('')}`);
-return exit_rule ("LetExpression");
-},
-Binding : function (lp,v,e,rp,) {
-enter_rule ("Binding");
-    set_return (`\n${v.rwr ()} = ${e.rwr ()}`);
-return exit_rule ("Binding");
-},
-PlusExpression : function (lp,_plus,e1,e2,rp,) {
-enter_rule ("PlusExpression");
+Expression_plus : function (lp,_plus,e1,e2,rp,) {
+enter_rule ("Expression_plus");
     set_return (`${e1.rwr ()} ${_plus.rwr ()} ${e2.rwr ()}`);
-return exit_rule ("PlusExpression");
+return exit_rule ("Expression_plus");
 },
-atom : function (x,) {
-enter_rule ("atom");
-    set_return (`${x.rwr ()}`);
-return exit_rule ("atom");
+Expression_vatom : function (v,) {
+enter_rule ("Expression_vatom");
+    set_return (`${v.rwr ()}`);
+return exit_rule ("Expression_vatom");
+},
+Expression_natom : function (n,) {
+enter_rule ("Expression_natom");
+    set_return (`${n.rwr ()}`);
+return exit_rule ("Expression_natom");
 },
 variable : function (id,) {
 enter_rule ("variable");

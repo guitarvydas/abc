@@ -1,9 +1,12 @@
 ABC {
-TopLevel = Expression
+TopLevel = Statement+
+
+  Statement =
+    | variable "<-" Expression Statement? -- assignment
+    | Expression Statement? -- expr
 
   Expression =
-    | variable "<-" Expression Expression? -- assignment
-    | Expression "+" Expression Expression? -- plus
+    | Expression "+" Expression -- plus
     | atom -- atom
 
   atom = variable | number
