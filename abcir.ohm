@@ -1,5 +1,8 @@
 abcir {
-TopLevel = Expression
+TopLevel = Statement+
+
+Statement =
+  | Expression Statement? -- expr
 
 Expression =
   | "(" "let" "(" "(" variable Expression ")" ")" Expression? ")" -- let

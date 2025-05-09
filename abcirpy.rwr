@@ -1,5 +1,7 @@
 % rewrite abcirpy {
-TopLevel [e] = ‛«e»’
+TopLevel [s] = ‛«s»’
+
+Statement_expr [e rec?] = ‛«e»«rec»’
 
 Expression_let [lp1 _let lp2 lp3 v e1 rp3 rp2 e? rp1] = ‛\n«v» = «e1»«e»’
 Expression_plus [lp _plus e1 e2 rp] = ‛«e1» «_plus» «e2»’ 

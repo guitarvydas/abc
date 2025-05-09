@@ -15,39 +15,39 @@ function getParameter (name) {
 
 let _rewrite = {
 
-TopLevel : function (exprs,) {
+TopLevel : function (s,) {
 enter_rule ("TopLevel");
-    set_return (`${exprs.rwr ()}`);
+    set_return (`${s.rwr ()}`);
 return exit_rule ("TopLevel");
-},
-Statement_assignment : function (v,_eq,e,rec,) {
-enter_rule ("Statement_assignment");
-    set_return (`\n${v.rwr ()}${_eq.rwr ()}${e.rwr ()}${rec.rwr ().join ('')}`);
-return exit_rule ("Statement_assignment");
 },
 Statement_expr : function (e,rec,) {
 enter_rule ("Statement_expr");
     set_return (`${e.rwr ()}${rec.rwr ().join ('')}`);
 return exit_rule ("Statement_expr");
 },
-Expression_plus : function (left,_plus,right,) {
+Expression_let : function (lp1,_let,lp2,lp3,v,e1,rp3,rp2,e,rp1,) {
+enter_rule ("Expression_let");
+    set_return (`\n${v.rwr ()} = ${e1.rwr ()}${e.rwr ().join ('')}`);
+return exit_rule ("Expression_let");
+},
+Expression_plus : function (lp,_plus,e1,e2,rp,) {
 enter_rule ("Expression_plus");
-    set_return (`${left.rwr ()}${_plus.rwr ()}${right.rwr ()}`);
+    set_return (`${e1.rwr ()} ${_plus.rwr ()} ${e2.rwr ()}`);
 return exit_rule ("Expression_plus");
 },
-Expression_atom : function (a,) {
-enter_rule ("Expression_atom");
-    set_return (`${a.rwr ()}`);
-return exit_rule ("Expression_atom");
+Expression_vatom : function (v,) {
+enter_rule ("Expression_vatom");
+    set_return (`${v.rwr ()}`);
+return exit_rule ("Expression_vatom");
 },
-atom : function (a,) {
-enter_rule ("atom");
-    set_return (`${a.rwr ()}`);
-return exit_rule ("atom");
+Expression_natom : function (n,) {
+enter_rule ("Expression_natom");
+    set_return (`${n.rwr ()}`);
+return exit_rule ("Expression_natom");
 },
-variable : function (c,) {
+variable : function (id,) {
 enter_rule ("variable");
-    set_return (`${c.rwr ()}`);
+    set_return (`${id.rwr ()}`);
 return exit_rule ("variable");
 },
 number : function (digits,) {
