@@ -9,6 +9,9 @@
 This code generator uses `pbp/t2t.bash` raw in _text_ form without using diagrams. (See the See Also section below).
 
 # Usage
+## install
+`$ make install-js-requires`
+## run
 `$ make`
 
 ## Output
@@ -72,18 +75,34 @@ The source file is `test.abc`. This example code is just 3 lines of code, to kee
 The output lines of code do nothing useful. The best you can do is to look at them to see if they look right.
 
 # Files
-`abc.ohm`
-`abccl.rwr`
-`abcidentity.rwr`
-`abcir.ohm`
-`abcirjs.rwr`
-`abcirpy.rwr`
-`abcjs.rwr`
-`abcpy.rwr`
-`empty.js`
-`Makefile`
-`README.md`
-`test.abc`
+
+A set of source files need to be supplied by the programmer.
+
+This example shows two ways of generating code
+	1. straight from the grammar
+	2. generating an IR (Intermediate Representation) from the grammar, then generating code from the IR
+
+Strictly speaking, you only need to use one way of generating code. I show two ways, to give you more choice.
+
+I often generate code straight from the grammar,,, but, I like to find simple ways to generate code and all of my examples tend to be small. IF I were building something quite large, I would choose to use an IR with a more regular, normalized, machine-readable syntax. I favour a Lisp-y IR syntax, because it is easy to parse, it is normalized (there are only 2 kinds of things, functions and basic atoms, all code is in prefix form (no pesky infix to parse)) and because there are several choices of already-existing code indenters that can help during low-level debugging and bootstrapping (I use emacs, YMMV).
+
+I tend to think that using a Lisp-y IR achieves many of the goals of "projectional editing", but, I haven't experimented much in that direction.
+
+## Manually written, supplied by programmer
+`test.abc` - simple test program written in ABC (3 lines of code)
+`abc.ohm` - grammar for the example ABC language
+`abccl.rwr` - rewrite rules from ABC to Common Lisp
+`abcidentity.rwr` - rewrite rules from ABC to Common Lisp
+`abcjs.rwr` - rewrite rules from ABC to Javascript
+`abcpy.rwr` - rewrite rules from ABC to Python
+`empty.js` - placeholder for extra support code (no code necessary for this example, hence, empty)
+`abcir.ohm` - grammar for the Itermediate Representation language
+`abcirjs.rwr` - rewrite rules from Intermediate Representation to Javascript
+`abcirpy.rwr` - rewrite rules from Intermedidate Representation to Python
+
+## Scaffolding for this example
+`Makefile` - makefile for this example
+`README.md` - this documentation file
 
 ## Tools
 `pbp/das/` - ignored (Diagrams as Syntax tool)
