@@ -2,7 +2,7 @@
 set -e
 wd=.
 pbp=./pbp
-Dev=~/projects/pbp-dev
+Dev=~/Documents/projects/pbp-dev
 TaS_Dev=${Dev}/tas
 
 
@@ -21,6 +21,7 @@ if [ -n "${DEV_PBP}" ]; then
     mkdir tas
     mkdir das
     mkdir t2t
+    mkdir t2t/lib
     mkdir kernel
     
 
@@ -28,7 +29,11 @@ if [ -n "${DEV_PBP}" ]; then
     cp ${Dev}/kernel/stubbed-out-repl.py ${KERNEL}/repl.py
     cp ${Dev}/kernel/decodeoutput.mjs ${KERNEL}
     cp ${Dev}/das/das2json.mjs ${DAS}/das2json.mjs
-    cp -R ${Dev}/t2t/lib ${T2T}
+    cp ${Dev}/t2t/lib/args.part.js ${T2T}/lib
+    cp ${Dev}/t2t/lib/front.part.js ${T2T}/lib
+    cp ${Dev}/t2t/lib/middle.part.js ${T2T}/lib
+    cp ${Dev}/t2t/lib/tail.part.js ${T2T}/lib
+    cp ${Dev}/t2t/lib/rwr.mjs ${T2T}/lib
 
     # for TaS, use code that is known to work for TaS (ostensibly the same as ${KERNEL}/???, but not necessarily)
     cp ${TaS_Dev}/cldecode.{ohm,rewrite} ${TAS}

@@ -6,6 +6,7 @@ import fs from 'fs';
 fs.writeFileSync('out.lisp', '\n');
 fs.writeFileSync('out.py', '\n');
 fs.writeFileSync('out.js', '\n');
+fs.writeFileSync('out.wasm', '\n');
 fs.writeFileSync('out.md', '\n');
 
 // Buffer to store stdin data
@@ -52,6 +53,9 @@ process.stdin.on('end', () => {
           case 'Javascript':
             outputFile = 'out.js';
             break;
+          case 'WASM':
+            outputFile = 'out.wasm';
+            break;
           default:
             // For any other key, write to out.md with a header
             outputFile = 'out.md';
@@ -64,7 +68,12 @@ process.stdin.on('end', () => {
       }
     });
     
-      //console.log('Processing complete. Files created: out.lisp, out.py, out.js, out.md');
+      fs.appendFileSync('out.lisp', '\n');
+      fs.appendFileSync('out.py', '\n');
+      fs.appendFileSync('out.js', '\n');
+      fs.appendFileSync('out.wasm', '\n');
+      fs.appendFileSync('out.md', '\n');
+
   } catch (error) {
     console.error('Error processing input:', error.message);
     process.exit(1);

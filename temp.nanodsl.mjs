@@ -67,7 +67,7 @@ function fetchArg (name) {
 let parameters = {};
 function pushParameter (name, v) {
     if (!parameters [name]) {
-	parameters [name] = [];
+        parameters [name] = [];
     }
     parameters [name].push (v);
 }
