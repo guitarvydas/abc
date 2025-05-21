@@ -40,5 +40,5 @@ test.abcir : abccl
 	@cat test.abcir
 	@echo
 
-install-js-requires:
+install:
 	npm install yargs prompt-sync ohm-js

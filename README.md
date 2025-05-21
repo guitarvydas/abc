@@ -10,7 +10,7 @@ This code generator uses `pbp/t2t.bash` raw in _text_ form without using diagram
 
 # Usage
 ## install
-`$ make install-js-requires`
+`$ make install`
 ## run
 `$ make`
 
