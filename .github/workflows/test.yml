@@ -12,5 +12,5 @@ jobs:
     - uses: actions/checkout@v4
     - run: sudo apt-get install -y python3 nodejs
     - name: test the build
-      run: bash ./make.bash
+      run: make
       
