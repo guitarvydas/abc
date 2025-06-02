@@ -2,7 +2,7 @@ wdir=.
 t2t = ./pbp/t2t.bash ${wdir} ${wdir}/pbp
 
 
-all : abcidentity abcjs abccl abcpy test.abcir abcirjs abcirpy
+all : install abcidentity abcjs abccl abcpy test.abcir abcirjs abcirpy
 
 abcjs : abc.ohm abcjs.rwr test.abc
 	@echo 'Javascript'
@@ -41,4 +41,4 @@ test.abcir : abccl
 	@echo
 
 install:
-	npm install yargs prompt-sync ohm-js
+	npm install
